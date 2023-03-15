@@ -23,6 +23,7 @@ class NameForm(forms.Form):
                                 {
                                     'placeholder': "Product",
                                     'class': 'form-control',
+                                    'id': 'id_product'
                                 }))
     product2 = forms.CharField(label='',
                                 max_length=100,
@@ -39,6 +40,7 @@ class NameForm(forms.Form):
                                 {
                                     'placeholder': "Refund amount",
                                     'class': 'form-control',
+                                    'id': 'id_refund_amount'
                                 }))
     final_date = forms.CharField(label='',
                                 max_length=100,
@@ -96,4 +98,24 @@ class NameForm(forms.Form):
     radio = forms.ChoiceField(choices=RADIO_CHOICES, label='Radio Buttons', initial='eng', widget=forms.RadioSelect(attrs={
         'class': 'form-check-input',
         'style': 'font-size: 10px; margin-bottom: 25px;',
+    }))
+
+    android = forms.BooleanField(label='Android', required=False, widget=forms.CheckboxInput(attrs={
+        'class': 'form-check-input',
+        'id': 'andr',  # Set the ID of the input
+    }))
+
+    apple = forms.BooleanField(label='Apple', required=False, widget=forms.CheckboxInput(attrs={
+        'class': 'form-check-input',
+        'id': 'appl',  # Set the ID of the input
+    }))
+
+    descriptor = forms.BooleanField(label='Descriptor charges', required=False, widget=forms.CheckboxInput(attrs={
+        'class': 'form-check-input',
+        'id': 'descr',  # Set the ID of the input
+    }))
+
+    no_time = forms.BooleanField(label='No Time', required=False, widget=forms.CheckboxInput(attrs={
+        'class': 'form-check-input',
+        'id': 'notime',  # Set the ID of the input
     }))

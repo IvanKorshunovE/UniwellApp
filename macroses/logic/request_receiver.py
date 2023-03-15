@@ -1,16 +1,31 @@
-from ..models import Greeting, Apologizing, AskingTheReason, Ending, Tail
-from .dummy_data_changer import change_name_email, change_product
+from ..models import Greeting, Apologizing, AskingTheReason, Ending, Tail, PayPalRefund, TransferToBilling, Thanking
+from .dummy_data_changer import change_name_email, change_product, define_currency, refund_sum, change_agent_name
 from googletrans import Translator
+from .checkboxes import get_data_for_checkboxes
 translator = Translator()
 
 
 def receive_form(user_form):
+    """
+    First - we select macro - then we should do checkboxes login.
+    :param user_form:
+    :return:
+    """
     sorted_data = data_sorter(user_form)
+    # Checkboxes
+
+
+
     # First you have to select macros
-    final_macro = select_macro(user_form)
+    final_macro = select_macro(user_form, sorted_data)
+
+
     # Then substitute all dummy data
     final_macro = change_name_email(final_macro, sorted_data[0], sorted_data[1])
     final_macro = change_product(final_macro, sorted_data)
+    final_macro = define_currency(final_macro, sorted_data)
+    final_macro = refund_sum(final_macro, sorted_data)
+    final_macro = change_agent_name(final_macro, sorted_data)
     # Change language
     final_macro = detect_language(final_macro, sorted_data)
     # Remove spaces from end
@@ -19,7 +34,7 @@ def receive_form(user_form):
     return final_macro
 
 
-def select_macro(u_form):
+def select_macro(u_form, sorted_data):
     selected_macro = u_form.cleaned_data['macro']
     final_macro = ''
     if selected_macro == 'RefWhy':
@@ -28,14 +43,59 @@ def select_macro(u_form):
         ask_reason = AskingTheReason.objects.get(id=1)
         ending = Ending.objects.get(id=1)
         tail = Tail.objects.get(id=1)
-        default_refund_why = [greeter, apologize, ask_reason, ending, tail]
+
+        selected_macro = [greeter, apologize, ask_reason, ending, tail]
+
+        if sorted_data[9]: # Check if descriptor checkbox is active
+            descriptor = get_data_for_checkboxes(sorted_data)
+            selected_macro.insert(2, descriptor)
+
         i = 0
-        for part in default_refund_why:
+        for part in selected_macro:
             final_macro += str(part)
             i += 1
-            if i < len(default_refund_why):
+            if i < len(selected_macro):
                 final_macro += f' <br><br>'
 
+    elif selected_macro == 'PPRef':
+        greeter = Greeting.objects.get(id=1)
+        apologize = Apologizing.objects.get(id=1)
+        pp_refund_part = PayPalRefund.objects.get(id=1)
+        ending = Ending.objects.get(id=2)
+        tail = Tail.objects.get(id=1)
+
+        selected_macro = [greeter, apologize, pp_refund_part, ending, tail]
+
+        if sorted_data[9]: # Check if descriptor checkbox is active
+            descriptor = get_data_for_checkboxes(sorted_data)
+            selected_macro.insert(2, descriptor)
+
+        i = 0
+        for part in selected_macro:
+            final_macro += str(part)
+            i += 1
+            if i < len(selected_macro):
+                final_macro += f' <br><br>'
+
+    elif selected_macro == 'TransferToBill':
+        greeter = Greeting.objects.get(id=1)
+        thank = Thanking.objects.get(id=1)
+        transfer_to_billing = TransferToBilling.objects.get(id=1)
+        ending = Ending.objects.get(id=2)
+        tail = Tail.objects.get(id=1)
+
+        selected_macro = [greeter, thank, transfer_to_billing, ending, tail]
+
+        if sorted_data[9]: # Check if descriptor checkbox is active
+            descriptor = get_data_for_checkboxes(sorted_data)
+            selected_macro.insert(2, descriptor)
+
+        i = 0
+        for part in selected_macro:
+            final_macro += str(part)
+            i += 1
+            if i < len(selected_macro):
+                final_macro += f' <br><br>'
 
     return final_macro
 
@@ -48,8 +108,24 @@ def data_sorter(user_form):
     refund_amount = user_form.cleaned_data['refund_amount']
     final_date = user_form.cleaned_data['final_date']
     radio_language = user_form.cleaned_data['radio']
+    checkbox_Android = user_form.cleaned_data['android']
+    checkbox_Apple = user_form.cleaned_data['apple']
+    checkbox_Descriptor = user_form.cleaned_data['descriptor']
+    checkbox_No_Time = user_form.cleaned_data['no_time']
 
-    data_list = [name, email, product1, product2, refund_amount, final_date, radio_language]
+    data_list = [
+        name,
+        email,
+        product1,
+        product2,
+        refund_amount,
+        final_date,
+        radio_language,
+        checkbox_Android,
+        checkbox_Apple,
+        checkbox_Descriptor,
+        checkbox_No_Time
+    ]
     return data_list
 
 def detect_language(macro, data_list):
@@ -88,6 +164,3 @@ def remove_space_from_beginning(macro):
         x = x.replace('<br> ', '<br>')
         new_macro += x
     return new_macro
-
-
-

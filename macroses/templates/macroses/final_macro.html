@@ -1,10 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'macroses/base.html' %}
+{% block content %}
+
+ {% csrf_token %}
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="30">{{ final_macro|safe }}
+    </textarea>
+
+
+<script>
+  const textarea = document.getElementById('exampleFormControlTextarea1');
+  textarea.value = textarea.value.replaceAll('<br>', '\n');
+</script>
+{% endblock %}

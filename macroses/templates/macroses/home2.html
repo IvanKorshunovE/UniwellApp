@@ -1,10 +1,97 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'macroses/base.html' %}
+{% block content %}
+
+
+<style>
+.col-12 {
+  margin-bottom: 20px;
+}
+.col-md-6 {
+  margin-bottom: 20px;
+}
+}
+.col-6 {
+  margin-bottom: 20px;
+}
+.col-2 {
+  margin-bottom: 20px;
+}
+
+</style>
+
+
+             <form action="" method="POST" target="_blank" class="row g-3">
+
+                {% csrf_token %}
+
+                <div class="col-md-6">
+                    {{ form.user_name }}
+                </div>
+
+                <div class="col-md-6">
+                    {{ form.user_email }}
+                </div>
+
+                <div class="col-md-6">
+                    {{ form.product }}
+                </div>
+
+                <div class="col-md-6">
+                    {{ form.product2 }}
+                </div>
+
+                <div class="col-md-6">
+                    {{ form.refund_amount }}
+                </div>
+
+                <div class="col-md-6">
+                    {{ form.final_date }}
+                </div>
+
+                <div class="col-md-6">
+                    {{ form.clear }}
+                </div>
+
+                <div class="col-md-6">
+                    {{ form.macro }}
+                </div><br>
+
+                {% for button in form.radio %}
+                    <div class="col-md-2" style="margin-left: 20px;">
+                        {{ button }}
+                    </div>
+                 {% endfor %}
+
+                <div class="col-md-6">
+                    <br>
+                    {{ form.submit }}
+                </div>
+
+
+
+
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            {% for field, errors in form.errors.items %}
+                <strong>{{ field }}:</strong>
+                {% for error in errors %}
+                    {{ error }}
+                {% endfor %}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+            </form>
+
+<script>
+function clearFields() {
+    document.getElementById("id_user_name").value = "";
+    document.getElementById("id_user_email").value = "";
+    document.getElementById("id_product").value = "";
+    document.getElementById("id_product2").value = "";
+    document.getElementById("id_refund_amount").value = "";
+    document.getElementById("id_final_date").value = "";
+}
+</script>
+
+{% endblock %}

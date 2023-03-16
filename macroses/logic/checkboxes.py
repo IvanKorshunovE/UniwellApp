@@ -76,7 +76,10 @@ def build_descriptor_part(list_with_period, sorted_data):
     product_2_field_text = sorted_data[3]
     final = list_with_period
     if len(final[1]) == 2 and final[1][0] != final[1][1] and product_2_field:
-        may_clarify = Descriptor.objects.get(id=1)
+        if sorted_data[11] or sorted_data[14]: # If checkbox change may I - to - may I ALSO?
+            may_clarify = Descriptor.objects.get(id=10)
+        else:
+            may_clarify = Descriptor.objects.get(id=1)
         describe_terms = Descriptor.objects.get(id=3)
         needed_to_be_canceled = Descriptor.objects.get(id=5)
         links = Descriptor.objects.get(id=6)
@@ -94,7 +97,10 @@ def build_descriptor_part(list_with_period, sorted_data):
             email = Descriptor.objects.get(id=2)
             descriptor_part.insert(1, email)
     elif not product_2_field:
-        may_clarify = Descriptor.objects.get(id=1)
+        if sorted_data[11] or sorted_data[14]: # If checkbox change may I - to - may I ALSO?
+            may_clarify = Descriptor.objects.get(id=10)
+        else:
+            may_clarify = Descriptor.objects.get(id=1)
         describe_terms = Descriptor.objects.get(id=9)
         needed_to_be_canceled = Descriptor.objects.get(id=5)
         links = Descriptor.objects.get(id=6)
@@ -112,7 +118,10 @@ def build_descriptor_part(list_with_period, sorted_data):
             email = Descriptor.objects.get(id=2)
             descriptor_part.insert(1, email)
     else:
-        may_clarify = Descriptor.objects.get(id=1)
+        if sorted_data[11] or sorted_data[14]: # If checkbox change may I - to - may I ALSO?
+            may_clarify = Descriptor.objects.get(id=10)
+        else:
+            may_clarify = Descriptor.objects.get(id=1)
         describe_terms = Descriptor.objects.get(id=4)
         needed_to_be_canceled = Descriptor.objects.get(id=5)
         links = Descriptor.objects.get(id=6)

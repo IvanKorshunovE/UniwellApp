@@ -63,3 +63,38 @@ class TransferToBilling(models.Model):
 
     def __str__(self):
         return self.transfer_to_billing
+
+
+class AfraidNotCancel(models.Model):
+    afraid_not_cancel = models.TextField('Afraid not cancel', max_length=5000)
+
+    def __str__(self):
+        return self.afraid_not_cancel
+
+
+class NoFreeTrial(models.Model):
+    no_free_trial = models.TextField('No free trial', max_length=5000)
+
+    def __str__(self):
+        return self.no_free_trial
+
+
+class NoTime(models.Model):
+    no_time = models.TextField('No Time', max_length=5000)
+
+    def __str__(self):
+        return self.no_time
+
+
+class BadMeals(models.Model):
+    bad_meals = models.TextField('Bad Meals', max_length=5000)
+
+    def __str__(self):
+        return self.bad_meals
+
+
+class BadWorkouts(models.Model):
+    bad_workouts = models.TextField('bad workouts', max_length=5000)
+
+    def __str__(self):
+        return self.bad_workouts

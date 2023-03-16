@@ -8,6 +8,6 @@
 
 <script>
   const textarea = document.getElementById('exampleFormControlTextarea1');
-  textarea.value = textarea.value.replaceAll('<br>', '\n');
+  textarea.value = textarea.value.replaceAll('<br>', '\n').trim();
 </script>
 {% endblock %}

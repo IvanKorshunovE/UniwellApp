@@ -96,6 +96,41 @@
                         </div>
                 </div><br>
 
+                <div class="col-md-6">
+                        <div class="form-check">
+                            {{ form.afraid_did_not_receive }}
+                            <label class="form-check-label" for="{{ form.android.notime }}">Afraid did not cancel before
+                            </label>
+                        </div>
+                </div><br>
+
+
+                <div class="col-md-6">
+                        <div class="form-check">
+                            {{ form.bad_workouts }}
+                            <label class="form-check-label" for="{{ form.android.notime }}">Bad Workouts</label>
+                        </div>
+                </div><br>
+
+
+                <div class="col-md-6">
+                        <div class="form-check">
+                            {{ form.free_trial }}
+                            <label class="form-check-label" for="{{ form.android.notime }}">No Free Trial</label>
+                        </div>
+                </div><br>
+
+
+                <div class="col-md-6">
+                        <div class="form-check">
+                            {{ form.bad_meals }}
+                            <label class="form-check-label" for="{{ form.android.notime }}">Bad Meals</label>
+                        </div>
+                </div><br>
+
+
+
+
 
 
 
@@ -128,6 +163,15 @@ function clearFields() {
     document.getElementById("id_product2").value = "";
     document.getElementById("id_refund_amount").value = "";
     document.getElementById("id_final_date").value = "";
+    document.getElementById("andr").checked = false;
+    document.getElementById("appl").checked = false;
+    document.getElementById("descr").checked = false;
+    document.getElementById("notime").checked = false;
+    document.getElementById("afraid").checked = false;
+    document.getElementById("badworkout").checked = false;
+    document.getElementById("free trial").checked = false;
+    document.getElementById("bad meals").checked = false;
+    document.getElementById("radio-eng").checked = true;
 };
 
 function find_float(id_product) {

@@ -92,6 +92,7 @@ class NameForm(forms.Form):
         ('esp', 'ES'),
         ('deu', 'DE'),
         ('fra', 'FR'),
+        ('it', 'IT'),
         ('prt', 'PT'),
         ('eng', 'ENG'),
     )
@@ -103,11 +104,13 @@ class NameForm(forms.Form):
     android = forms.BooleanField(label='Android', required=False, widget=forms.CheckboxInput(attrs={
         'class': 'form-check-input',
         'id': 'andr',  # Set the ID of the input
+        'disabled': True,
     }))
 
     apple = forms.BooleanField(label='Apple', required=False, widget=forms.CheckboxInput(attrs={
         'class': 'form-check-input',
         'id': 'appl',  # Set the ID of the input
+        'disabled': True,
     }))
 
     descriptor = forms.BooleanField(label='Descriptor charges', required=False, widget=forms.CheckboxInput(attrs={
@@ -118,4 +121,25 @@ class NameForm(forms.Form):
     no_time = forms.BooleanField(label='No Time', required=False, widget=forms.CheckboxInput(attrs={
         'class': 'form-check-input',
         'id': 'notime',  # Set the ID of the input
+    }))
+
+    afraid_did_not_receive = forms.BooleanField(label='Afraid did not receive', required=False,
+                                                widget=forms.CheckboxInput(attrs={
+                                                    'class': 'form-check-input',
+                                                    'id': 'afraid',  # Set the ID of the input
+    }))
+
+    bad_workouts = forms.BooleanField(label='Bad Workouts', required=False, widget=forms.CheckboxInput(attrs={
+        'class': 'form-check-input',
+        'id': 'badworkout',  # Set the ID of the input
+    }))
+
+    free_trial = forms.BooleanField(label='Free Trial', required=False, widget=forms.CheckboxInput(attrs={
+        'class': 'form-check-input',
+        'id': 'free trial',  # Set the ID of the input
+    }))
+
+    bad_meals = forms.BooleanField(label='Bad Meals', required=False, widget=forms.CheckboxInput(attrs={
+        'class': 'form-check-input',
+        'id': 'bad meals',  # Set the ID of the input
     }))

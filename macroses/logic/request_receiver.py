@@ -2,6 +2,7 @@ from ..models import Greeting, Apologizing, AskingTheReason, Ending, Tail, PayPa
 from .dummy_data_changer import change_name_email, change_product, define_currency, refund_sum, change_agent_name
 from googletrans import Translator
 from .checkboxes import get_data_for_checkboxes
+from .other_checkboxes import afraid_not_cancel, no_free_trial, no_time, bad_meals, bad_workouts
 translator = Translator()
 
 
@@ -33,25 +34,61 @@ def receive_form(user_form):
     final_macro = remove_locos(final_macro)
     return final_macro
 
-
+# 7, 8, 9, 10, 11, 12, 13, 14
 def select_macro(u_form, sorted_data):
+    checkmark_trues = [sorted_data[10], sorted_data[12], sorted_data[13]]
+    checkmark_trues2 = [sorted_data[10], sorted_data[12], sorted_data[13], sorted_data[7], sorted_data[8],
+                        sorted_data[9], sorted_data[11], sorted_data[14]]
     selected_macro = u_form.cleaned_data['macro']
     final_macro = ''
     if selected_macro == 'RefWhy':
         greeter = Greeting.objects.get(id=1)
-        apologize = Apologizing.objects.get(id=1)
-        ask_reason = AskingTheReason.objects.get(id=1)
+        if sorted_data[14]:
+            apologize = Thanking.objects.get(id=1)
+        else:
+            apologize = Apologizing.objects.get(id=1)
+        ####
+        if True in checkmark_trues:
+            ask_reason = AskingTheReason.objects.get(id=2) # Are there anything else?
+        else:
+            ask_reason = AskingTheReason.objects.get(id=1)
+        ###
         ending = Ending.objects.get(id=1)
         tail = Tail.objects.get(id=1)
 
         selected_macro = [greeter, apologize, ask_reason, ending, tail]
 
+        if sorted_data[13]:  # Check if bad workouts
+            bad_workouts_2 = bad_workouts(sorted_data)
+            selected_macro.insert(2, bad_workouts_2)
+
+        if sorted_data[12]:  # Check if bad meals
+            if 'MM' in sorted_data[2] and sorted_data[13]:
+                pass
+            bad_meals2 = bad_meals(sorted_data)
+            selected_macro.insert(2, bad_meals2)
+
+        if sorted_data[10]:  # Check if no time checkbox is active
+            no_time_part = no_time(sorted_data)
+            selected_macro.insert(2, no_time_part)
+
         if sorted_data[9]: # Check if descriptor checkbox is active
             descriptor = get_data_for_checkboxes(sorted_data)
             selected_macro.insert(2, descriptor)
 
+        if sorted_data[14]: # Check if not free trial checkbox is checked
+            free_trial_absent = no_free_trial(sorted_data)
+            selected_macro.insert(2, free_trial_absent)
+
+        if sorted_data[11]: # Check if afraid not cancel
+            afraid_not_canceled = afraid_not_cancel(sorted_data)
+            selected_macro.insert(2, afraid_not_canceled)
+
         i = 0
         for part in selected_macro:
+            if len(str(part)) < 3:
+                # print(' ____ ----- ______ ------ _______ --------_____ _-----____')
+                continue
             final_macro += str(part)
             i += 1
             if i < len(selected_macro):
@@ -66,12 +103,35 @@ def select_macro(u_form, sorted_data):
 
         selected_macro = [greeter, apologize, pp_refund_part, ending, tail]
 
+        if sorted_data[13]:  # Check if bad workouts
+            bad_workouts_2 = bad_workouts(sorted_data)
+            selected_macro.insert(2, bad_workouts_2)
+
+        if sorted_data[12]:  # Check if bad meals
+            bad_meals2 = bad_meals(sorted_data)
+            selected_macro.insert(2, bad_meals2)
+
+        if sorted_data[10]: # Check if no time checkbox is active
+            no_time_part = no_time(sorted_data)
+            selected_macro.insert(2, no_time_part)
+
         if sorted_data[9]: # Check if descriptor checkbox is active
             descriptor = get_data_for_checkboxes(sorted_data)
             selected_macro.insert(2, descriptor)
 
+        if sorted_data[14]: # Check if not free trial checkbox is checked
+            free_trial_absent = no_free_trial(sorted_data)
+            selected_macro.insert(2, free_trial_absent)
+
+        if sorted_data[11]: # Check if afraid not cancel
+            afraid_not_canceled = afraid_not_cancel(sorted_data)
+            selected_macro.insert(2, afraid_not_canceled)
+
         i = 0
         for part in selected_macro:
+            if len(str(part)) < 3:
+                # print(' ____ ----- ______ ------ _______ --------_____ _-----____')
+                continue
             final_macro += str(part)
             i += 1
             if i < len(selected_macro):
@@ -86,12 +146,42 @@ def select_macro(u_form, sorted_data):
 
         selected_macro = [greeter, thank, transfer_to_billing, ending, tail]
 
+        if True in checkmark_trues2:
+            any_other_reason = TransferToBilling.objects.get(id=2)
+            selected_macro.insert(2, any_other_reason)
+
+        if sorted_data[13]:  # Check if bad workouts
+            bad_workouts_2 = bad_workouts(sorted_data)
+            selected_macro.insert(2, bad_workouts_2)
+
+        if sorted_data[12]:  # Check if bad meals
+            if 'MM' in sorted_data[2] and sorted_data[13]:
+                pass
+            bad_meals2 = bad_meals(sorted_data)
+            selected_macro.insert(2, bad_meals2)
+
+        if sorted_data[10]: # Check if no time checkbox is active !!! Do not change ORDER!!!
+            no_time_part = no_time(sorted_data)
+            selected_macro.insert(2, no_time_part)
+
         if sorted_data[9]: # Check if descriptor checkbox is active
             descriptor = get_data_for_checkboxes(sorted_data)
             selected_macro.insert(2, descriptor)
 
+        if sorted_data[14]: # Check if not free trial checkbox is checked
+            free_trial_absent = no_free_trial(sorted_data)
+            selected_macro.insert(2, free_trial_absent)
+
+        if sorted_data[11]: # Check if afraid not cancel
+            afraid_not_canceled = afraid_not_cancel(sorted_data)
+            selected_macro.insert(2, afraid_not_canceled)
+
+
         i = 0
         for part in selected_macro:
+            if len(str(part)) < 2:
+                # print(' ____ ----- ______ ------ _______ --------_____ _-----____')
+                continue
             final_macro += str(part)
             i += 1
             if i < len(selected_macro):
@@ -112,19 +202,29 @@ def data_sorter(user_form):
     checkbox_Apple = user_form.cleaned_data['apple']
     checkbox_Descriptor = user_form.cleaned_data['descriptor']
     checkbox_No_Time = user_form.cleaned_data['no_time']
+    checkbox_afraid_not_cancel = user_form.cleaned_data['afraid_did_not_receive']
+    checkbox_bad_meals = user_form.cleaned_data['bad_meals']
+    checkbox_bad_workout = user_form.cleaned_data['bad_workouts']
+    checkbox_no_free_trial = user_form.cleaned_data['free_trial']
+    selected_macro = user_form.cleaned_data['macro']
 
     data_list = [
-        name,
-        email,
-        product1,
-        product2,
-        refund_amount,
-        final_date,
-        radio_language,
-        checkbox_Android,
-        checkbox_Apple,
-        checkbox_Descriptor,
-        checkbox_No_Time
+        name,  # 0
+        email,  # 1
+        product1,  # 2
+        product2,  # 3
+        refund_amount,  # 4
+        final_date,  # 5
+        radio_language,  # 6
+        checkbox_Android,  # 7
+        checkbox_Apple,  # 8
+        checkbox_Descriptor,  # 9
+        checkbox_No_Time,  # 10
+        checkbox_afraid_not_cancel,  # 11
+        checkbox_bad_meals,  # 12
+        checkbox_bad_workout,  # 13
+        checkbox_no_free_trial,  # 14
+        selected_macro,  # 15
     ]
     return data_list
 
@@ -139,6 +239,9 @@ def detect_language(macro, data_list):
     elif choice == 'fra':
         translated_macro = translator.translate(macro, dest='fr').text
         translated_macro = remove_space_from_beginning(translated_macro)
+    elif choice == 'it':
+        translated_macro = translator.translate(macro, dest='it').text
+        translated_macro = remove_space_from_beginning(translated_macro)
     elif choice == 'prt':
         translated_macro = translator.translate(macro, dest='pt').text
         translated_macro = remove_space_from_beginning(translated_macro)
@@ -149,12 +252,12 @@ def detect_language(macro, data_list):
 
 def remove_locos(macro):
     'Remove all typos during translation'
-    if 'músculos locos' in macro:
-        macro = macro.replace('músculos locos', 'Mad Muscles')
-    if 'unméale' in macro:
-        macro = macro.replace('unméale', 'Unimeal')
-    if 'U_agent' in macro:
-        macro = macro.replace('U_agent', 'U_AGENT')
+    macro = macro.replace('músculos locos', 'Mad Muscles')
+    macro = macro.replace('unméale', 'Unimeal')
+    macro = macro.replace('U_agent', 'U_AGENT')
+    macro = macro.replace('saluti', 'Saluti')
+    macro = macro.replace('saluti', 'Saluti')
+    macro = macro.replace('etano', 'Ethan')
     return macro
 
 def remove_space_from_beginning(macro):

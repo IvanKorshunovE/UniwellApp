@@ -1,5 +1,6 @@
 from django import forms
 
+
 class NameForm(forms.Form):
     user_name = forms.CharField(label='',
                                 max_length=100,
@@ -12,44 +13,44 @@ class NameForm(forms.Form):
     user_email = forms.EmailField(label='',
                                   required=False,
                                   widget=forms.EmailInput(attrs=
-                                                          {
-                                                              'placeholder': 'Enter user\'s email',
-                                                              'class': 'form-control',
-                                                          }))
+                                  {
+                                      'placeholder': 'Enter user\'s email',
+                                      'class': 'form-control',
+                                  }))
     product = forms.CharField(label='',
-                                max_length=100,
-                                required=True,
-                                widget=forms.TextInput(attrs=
-                                {
-                                    'placeholder': "Product",
-                                    'class': 'form-control',
-                                    'id': 'id_product'
-                                }))
+                              max_length=100,
+                              required=True,
+                              widget=forms.TextInput(attrs=
+                              {
+                                  'placeholder': "Product",
+                                  'class': 'form-control',
+                                  'id': 'id_product'
+                              }))
     product2 = forms.CharField(label='',
-                                max_length=100,
-                                required=False,
-                                widget=forms.TextInput(attrs=
-                                {
-                                    'placeholder': "Product for upsells",
-                                    'class': 'form-control',
-                                }))
+                               max_length=100,
+                               required=False,
+                               widget=forms.TextInput(attrs=
+                               {
+                                   'placeholder': "Product for upsells",
+                                   'class': 'form-control',
+                               }))
     refund_amount = forms.CharField(label='',
-                                max_length=100,
-                                required=False,
-                                widget=forms.TextInput(attrs=
-                                {
-                                    'placeholder': "Refund amount",
-                                    'class': 'form-control',
-                                    'id': 'id_refund_amount'
-                                }))
+                                    max_length=100,
+                                    required=False,
+                                    widget=forms.TextInput(attrs=
+                                    {
+                                        'placeholder': "Refund amount",
+                                        'class': 'form-control',
+                                        'id': 'id_refund_amount'
+                                    }))
     final_date = forms.CharField(label='',
-                                max_length=100,
-                                required=False,
-                                widget=forms.TextInput(attrs=
-                                {
-                                    'placeholder': "Final date/UUID",
-                                    'class': 'form-control',
-                                }))
+                                 max_length=100,
+                                 required=False,
+                                 widget=forms.TextInput(attrs=
+                                 {
+                                     'placeholder': "Final date/UUID",
+                                     'class': 'form-control',
+                                 }))
     #
     # # THIS IS SEEMS TO BE NOT NECESSARY
     # def clear_fields(self):
@@ -70,6 +71,7 @@ class NameForm(forms.Form):
     macro = forms.ChoiceField(choices=MACRO_CHOICES, label='Macros', widget=forms.Select(attrs={
         'class': 'form-select',
         'style': 'width: 540px; font-size: 25px',
+        'id': 'id_macro',
     }))
     #
     clear = forms.CharField(label='Clear', required=False, widget=forms.TextInput(attrs={
@@ -84,7 +86,7 @@ class NameForm(forms.Form):
         widget=forms.TextInput(attrs={
             'type': 'submit',
             'value': 'Generate',
-            'class' :"btn btn-primary btn-default btn-block",
+            'class': "btn btn-primary btn-default btn-block",
         })
     )
 
@@ -96,10 +98,12 @@ class NameForm(forms.Form):
         ('prt', 'PT'),
         ('eng', 'ENG'),
     )
-    radio = forms.ChoiceField(choices=RADIO_CHOICES, label='Radio Buttons', initial='eng', widget=forms.RadioSelect(attrs={
-        'class': 'form-check-input',
-        'style': 'font-size: 10px; margin-bottom: 25px;',
-    }))
+    radio = forms.ChoiceField(choices=RADIO_CHOICES, label='Radio Buttons', initial='eng',
+                              widget=forms.RadioSelect(attrs={
+                                  'class': 'form-check-input',
+                                  'style': 'font-size: 10px; margin-bottom: 25px;',
+                                  'id': 'radio'
+                              }))
 
     android = forms.BooleanField(label='Android', required=False, widget=forms.CheckboxInput(attrs={
         'class': 'form-check-input',
@@ -115,6 +119,7 @@ class NameForm(forms.Form):
 
     descriptor = forms.BooleanField(label='Descriptor charges', required=False, widget=forms.CheckboxInput(attrs={
         'class': 'form-check-input',
+        'type': "checkbox",
         'id': 'descr',  # Set the ID of the input
     }))
 
@@ -127,7 +132,7 @@ class NameForm(forms.Form):
                                                 widget=forms.CheckboxInput(attrs={
                                                     'class': 'form-check-input',
                                                     'id': 'afraid',  # Set the ID of the input
-    }))
+                                                }))
 
     bad_workouts = forms.BooleanField(label='Bad Workouts', required=False, widget=forms.CheckboxInput(attrs={
         'class': 'form-check-input',
@@ -143,3 +148,26 @@ class NameForm(forms.Form):
         'class': 'form-check-input',
         'id': 'bad meals',  # Set the ID of the input
     }))
+
+    cancel = forms.BooleanField(label='Cancel', required=False, widget=forms.CheckboxInput(attrs={
+        'class': 'form-check-input',
+        'id': 'cancel',  # Set the ID of the input
+    }))
+
+    not_user_friendly = forms.BooleanField(label='Not User friendly/difficult to use', required=False,
+                                           widget=forms.CheckboxInput(attrs={
+                                               'class': 'form-check-input',
+                                               'id': 'not_friendly',  # Set the ID of the input
+                                           }))
+
+    not_use = forms.BooleanField(label='Not use app', required=False,
+                                 widget=forms.CheckboxInput(attrs={
+                                     'class': 'form-check-input',
+                                     'id': 'not_use',  # Set the ID of the input
+                                 }))
+
+    what_weight = forms.BooleanField(label='what_weight', required=False,
+                                     widget=forms.CheckboxInput(attrs={
+                                         'class': 'form-check-input',
+                                         'id': 'what_weight',  # Set the ID of the input
+                                     }))

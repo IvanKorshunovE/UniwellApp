@@ -98,3 +98,31 @@ class BadWorkouts(models.Model):
 
     def __str__(self):
         return self.bad_workouts
+
+
+class Canceled(models.Model):
+    canceled = models.TextField('Canceled', max_length=5000)
+
+    def __str__(self):
+        return self.canceled
+
+
+class GoWith(models.Model):
+    go_with = models.TextField('Go With product', max_length=5000)
+
+    def __str__(self):
+        return self.go_with
+
+
+class NotUserFriendly(models.Model):
+    not_user_friendly = models.TextField('Not User Friendly/ Difficult to use', max_length=5000)
+
+    def __str__(self):
+        return self.not_user_friendly
+
+
+class HowMuchWeight(models.Model):
+    what_weight = models.TextField('Unknown weight', max_length=5000)
+
+    def __str__(self):
+        return self.what_weight

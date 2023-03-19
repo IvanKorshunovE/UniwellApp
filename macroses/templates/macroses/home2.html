@@ -128,6 +128,36 @@
                         </div>
                 </div><br>
 
+                <div class="col-md-6">
+                        <div class="form-check">
+                            {{ form.cancel }}
+                            <label class="form-check-label" for="{{ form.android.notime }}">Sub Canceled</label>
+                        </div>
+                </div><br>
+
+
+                <div class="col-md-6">
+                        <div class="form-check">
+                            {{ form.not_user_friendly }}
+                            <label class="form-check-label">Not user-friendly/difficult to use</label>
+                        </div>
+                </div><br>
+
+
+                <div class="col-md-6">
+                        <div class="form-check">
+                            {{ form.not_use }}
+                            <label class="form-check-label">I do not use it</label>
+                        </div>
+                </div><br>
+
+
+                <div class="col-md-6">
+                        <div class="form-check">
+                            {{ form.what_weight }}
+                            <label class="form-check-label">How much weight should I use?</label>
+                        </div>
+                </div><br>
 
 
 
@@ -171,7 +201,12 @@ function clearFields() {
     document.getElementById("badworkout").checked = false;
     document.getElementById("free trial").checked = false;
     document.getElementById("bad meals").checked = false;
-    document.getElementById("radio-eng").checked = true;
+    document.getElementById("cancel").checked = false;
+    document.getElementById("not_friendly").checked = false;
+    document.getElementById("not_use").checked = false;
+    document.getElementById("what_weight").checked = false;
+    document.getElementById("id_macro").value = "RefWhy";
+    document.querySelector('input[name="radio"][value="eng"]').checked = true;
 };
 
 function find_float(id_product) {
